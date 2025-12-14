@@ -1,0 +1,14 @@
+[
+    {
+        "ident" : "RebalanceRespawnShuffleCost",
+        "version" : "1.0",
+        "download_url" : "https://github.com/Florane/rebalanceRespawnShuffleCost/archive/refs/heads/main.zip",
+        "patchnotes_url" : "https://modworkshop.net/mod/50906?tab=changelog"
+    }
+]
+"updates" : [
+            {
+                "identifier" : "RebalanceRespawnShuffleCost",
+                "host" : {"meta" : "https://raw.githubusercontent.com/Florane/rebalanceRespawnShuffleCost/refs/heads/main/meta.json"}
+            }
+        ]

@@ -1,0 +1,19 @@
+{
+	"blt_version" : 2,
+	"name" : "Rebalance Respawn and Shuffle Cost",
+	"description" : "Swaps the costs of restarting a spree and reshuffling available heists",
+	"author" : " no",
+	"image" : "icon.png",
+	"version" : "1.0",
+	"priority" : 0,
+	"color" : "0.298 0.698 0.760",
+	"hooks" : [
+		{ "hook_id" : "lib/managers/crimespreemanager", "script_path" : "main.lua"},
+	]
+        "updates" : [
+            {
+                "identifier" : "RebalanceRespawnShuffleCost",
+                "host" : {"meta" : "https://raw.githubusercontent.com/Florane/rebalanceRespawnShuffleCost/refs/heads/main/meta.json"}
+            }
+        ]
+}
