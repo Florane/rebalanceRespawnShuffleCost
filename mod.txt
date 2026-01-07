@@ -5,15 +5,14 @@
 	"author" : " no",
 	"image" : "icon.png",
 	"version" : "1.0",
-	"priority" : 0,
-	"color" : "0.298 0.698 0.760",
+	"color" : "0.003 0.440 0.346",
 	"hooks" : [
-		{ "hook_id" : "lib/managers/crimespreemanager", "script_path" : "main.lua"},
+		{ "hook_id" : "lib/managers/crimespreemanager", "script_path" : "main.lua"}
+	],
+	"updates" : [
+		{
+			"identifier" : "RebalanceRespawnShuffleCost",
+			"host" : {"meta" : "https://raw.githubusercontent.com/Florane/rebalanceRespawnShuffleCost/refs/heads/main/meta.json"}
+		}
 	]
-        "updates" : [
-            {
-                "identifier" : "RebalanceRespawnShuffleCost",
-                "host" : {"meta" : "https://raw.githubusercontent.com/Florane/rebalanceRespawnShuffleCost/refs/heads/main/meta.json"}
-            }
-        ]
 }
