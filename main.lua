@@ -9,6 +9,7 @@ if not RebalanceRespawnShuffleCost then
 		respawn_enable = true,
 		respawn_base_cost = 6,
 		respawn_cost_growth_curve = 1,
+		divider = 0,
 		shuffle_enable = true,
 		shuffle_starting_cost = 6,
 		shuffle_growth_cost = 0.7,
@@ -16,6 +17,7 @@ if not RebalanceRespawnShuffleCost then
 	RebalanceRespawnShuffleCost.values = {
 		respawn_base_cost = {0,24,1},
 		respawn_cost_growth_curve = {"menu_RRSC_linear","menu_RRSC_exponential"},
+		divider = "divider",
 		shuffle_starting_cost = {0,24,1},
 		shuffle_growth_cost = {0,2.0,0.1},
 	}
@@ -31,6 +33,7 @@ if not RebalanceRespawnShuffleCost then
 		"respawn_enable",
 		"respawn_base_cost",
 		"respawn_cost_growth_curve",
+		"divider",
 		"shuffle_enable",
 		"shuffle_starting_cost",
 		"shuffle_growth_cost"})
@@ -116,8 +119,8 @@ if not RebalanceRespawnShuffleCost then
 	end)
 
 	Hooks:Add("MenuManagerBuildCustomMenus","MenuManagerBuildCustomMenusRRSC", function (menu_manager, nodes)
-		AutoMenuBuilder:load_settings(RebalanceRespawnShuffleCost.settings, "RebalanceRespawnShuffleCostSettings")
-		AutoMenuBuilder:create_menu_from_table(nodes, RebalanceRespawnShuffleCost.settings, "RebalanceRespawnShuffleCostSettings", "blt_options",RebalanceRespawnShuffleCost.values)
+		AutoMenuBuilder_mod:load_settings(RebalanceRespawnShuffleCost.settings, "RebalanceRespawnShuffleCostSettings")
+		AutoMenuBuilder_mod:create_menu_from_table(nodes, RebalanceRespawnShuffleCost.settings, "RebalanceRespawnShuffleCostSettings", "blt_options",RebalanceRespawnShuffleCost.values,RebalanceRespawnShuffleCost.order)
 	end)
 
 	Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitRRSC", function (loc)
@@ -141,3 +144,4 @@ if not RebalanceRespawnShuffleCost then
 		})
 	end)
 end
+

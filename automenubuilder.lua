@@ -1,9 +1,9 @@
 --[[ Auto Menu Builder v1.2 by Hoppip ]]
 -- Include this file in your mod and make sure it is executed
 
-AutoMenuBuilder = AutoMenuBuilder or {}
+AutoMenuBuilder_mod = AutoMenuBuilder_mod or {}
 
-function AutoMenuBuilder:load_settings(settings_table, identifier)
+function AutoMenuBuilder_mod:load_settings(settings_table, identifier)
   local file = io.open(SavePath .. identifier .. ".txt", "r")
   if file then
     local data = json.decode(file:read("*all"))
@@ -23,7 +23,7 @@ function AutoMenuBuilder:load_settings(settings_table, identifier)
   end
 end
 
-function AutoMenuBuilder:create_menu_from_table(menu_nodes, settings_table, identifier, parent_menu, values, order)
+function AutoMenuBuilder_mod:create_menu_from_table(menu_nodes, settings_table, identifier, parent_menu, values, order)
   local function set_value(item_name, item_value)
     local hierarchy = item_name:split("/")
     local tbl = settings_table
@@ -97,6 +97,13 @@ function AutoMenuBuilder:create_menu_from_table(menu_nodes, settings_table, iden
             callback = identifier .. "_value",
             value = v,
             items = vals,
+            menu_id = menu_id,
+            priority = order[k]
+          })
+        elseif vals and type(vals) == "string" then
+          MenuHelper:AddDivider({
+            id = hierarchy .. k,
+            size = 8,
             menu_id = menu_id,
             priority = order[k]
           })
