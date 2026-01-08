@@ -1,8 +1,8 @@
 [
     {
-        "ident" : "RebalanceRespawnShuffleCost",
+        "ident" : "RebalanceContinueShuffleCost",
         "version" : "1.0",
         "download_url" : "https://github.com/Florane/rebalanceRespawnShuffleCost/archive/refs/heads/main.zip",
-        "patchnotes_url" : "https://modworkshop.net/mod/50906?tab=changelog"
+        "patchnotes_url" : "https://modworkshop.net/mod/54945?tab=changelog"
     }
 ]

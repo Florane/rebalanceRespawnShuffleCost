@@ -11,7 +11,7 @@
 	],
 	"updates" : [
 		{
-			"identifier" : "RebalanceRespawnShuffleCost",
+			"identifier" : "RebalanceContinueShuffleCost",
 			"host" : {"meta" : "https://raw.githubusercontent.com/Florane/rebalanceRespawnShuffleCost/refs/heads/main/meta.json"}
 		}
 	]
