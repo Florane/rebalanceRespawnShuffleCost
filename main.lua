@@ -15,18 +15,25 @@ if not RebalanceRespawnShuffleCost then
 	}
 	RebalanceRespawnShuffleCost.values = {
 		respawn_base_cost = {0,24,1},
-		respawn_cost_growth_curve = {"linear","exponential"},
+		respawn_cost_growth_curve = {"menu_RRSC_linear","menu_RRSC_exponential"},
 		shuffle_starting_cost = {0,24,1},
 		shuffle_growth_cost = {0,2.0,0.1},
 	}
-	RebalanceRespawnShuffleCost.order = {
-		respawn_enable = -1,
-		respawn_base_cost = -2,
-		respawn_cost_growth_curve = -3,
-		shuffle_enable = -4,
-		shuffle_starting_cost = -5,
-		shuffle_growth_cost = -6,
-	}
+
+	local function orderList(order)
+		local ret = {}
+		for i, v in ipairs(order) do
+			ret[v] = -i
+		end
+		return ret
+	end
+	RebalanceRespawnShuffleCost.order = orderList({
+		"respawn_enable",
+		"respawn_base_cost",
+		"respawn_cost_growth_curve",
+		"shuffle_enable",
+		"shuffle_starting_cost",
+		"shuffle_growth_cost"})
 
 	function RebalanceRespawnShuffleCost:load()
         local file = io.open(self._save_path, "r")
@@ -59,7 +66,7 @@ if not RebalanceRespawnShuffleCost then
 		if not RebalanceRespawnShuffleCost.settings.respawn_enable then return Hooks:GetReturn() end
 
 		if Hooks:GetReturn() == 0 then return 0 end
-		return math.max(RebalanceRespawnShuffleCost.settings.respawn_starting_cost,(RebalanceRespawnShuffleCost.restart_cost*RebalanceRespawnShuffleCost.settings.respawn_starting_cost))
+		return math.max(RebalanceRespawnShuffleCost.settings.respawn_base_cost,(RebalanceRespawnShuffleCost.restart_cost*RebalanceRespawnShuffleCost.settings.respawn_base_cost))
 	end)
 
 	Hooks:OverrideFunction(CrimeSpreeManager, "continue_crime_spree", function (self) --rewritten to remove shuffling heists on restart.
@@ -75,14 +82,16 @@ if not RebalanceRespawnShuffleCost then
 		self._global.randomization_cost = false
 
 		if RebalanceRespawnShuffleCost.settings.respawn_enable then
-			if RebalanceRespawnShuffleCost.settings.respawn_cost_growth_curve == "exponential" then
-				RebalanceRespawnShuffleCost.restart_cost = RebalanceRespawnShuffleCost.restart_cost*2
-			elseif RebalanceRespawnShuffleCost.settings.respawn_cost_growth_curve == "linear"
+			if RebalanceRespawnShuffleCost.settings.respawn_cost_growth_curve == 0 then
 				RebalanceRespawnShuffleCost.restart_cost = RebalanceRespawnShuffleCost.restart_cost+1
+			elseif RebalanceRespawnShuffleCost.settings.respawn_cost_growth_curve == 1 then
+				RebalanceRespawnShuffleCost.restart_cost = RebalanceRespawnShuffleCost.restart_cost*2
 			end
 			if RebalanceRespawnShuffleCost.restart_cost < 1 then RebalanceRespawnShuffleCost.restart_cost = 1.0 end
 		else
 			self:generate_new_mission_set()
+			--there is a better way to implement disabling changes
+			--but this one is funnier
 		end
 
 		if Network:multiplayer() and managers.network:session() then
@@ -113,12 +122,22 @@ if not RebalanceRespawnShuffleCost then
 
 	Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInitRRSC", function (loc)
 		loc:add_localized_strings({
-			["menu_RebalanceRespawnShuffleCostSettings"] = "Rebalance Respawn and Shuffle Cost",
-			["menu_RebalanceRespawnShuffleCostSettings_respawn_base_cost_desc"] = "Base cost for restarts.",
-			["menu_RebalanceRespawnShuffleCostSettings_respawn_cost_growth_curve_desc"] = "Exponential multiplies cost by 2 every restart(n=n*2), Linear increases current cost by base cost every restart(n=n+1)/",
+			["menu_RebalanceRespawnShuffleCostSettings"] = "Rebalance Spree Continue Cost",
+
+			["menu_RebalanceRespawnShuffleCostSettings_respawn_enable"] = "ENABLE CONTINUE",
+			["menu_RebalanceRespawnShuffleCostSettings_respawn_base_cost"] = "BASE COST",
+			["menu_RebalanceRespawnShuffleCostSettings_respawn_cost_growth_curve"] = "GROWTH CURVE",
+			["menu_RebalanceRespawnShuffleCostSettings_shuffle_enable"] = "ENABLE SHUFFLE",
+			["menu_RebalanceRespawnShuffleCostSettings_shuffle_starting_cost"] = "STARTING COST",
+			["menu_RebalanceRespawnShuffleCostSettings_shuffle_growth_cost"] = "GROWTH COST",
+
+			["menu_RebalanceRespawnShuffleCostSettings_respawn_base_cost_desc"] = "Base cost for continues.",
+			["menu_RebalanceRespawnShuffleCostSettings_respawn_cost_growth_curve_desc"] = "Exponential multiplies cost by 2 every continue(n=n*2),\nLinear increases current cost by base cost every continue(n=n+1)",
 			["menu_RebalanceRespawnShuffleCostSettings_shuffle_starting_cost_desc"] = "Base cost for shuffle.",
-			["menu_RebalanceRespawnShuffleCostSettings_shuffle_growth_cost_desc"] = "Multiplier for shuffle cost growth per level."
+			["menu_RebalanceRespawnShuffleCostSettings_shuffle_growth_cost_desc"] = "Multiplier for shuffle cost growth per level.",
+
+			["menu_RRSC_linear"] = "LINEAR",
+			["menu_RRSC_exponential"] = "EXPONENTIAL",
 		})
 	end)
 end
-

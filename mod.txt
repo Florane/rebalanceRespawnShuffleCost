@@ -1,6 +1,6 @@
 {
 	"blt_version" : 2,
-	"name" : "Rebalance Respawn and Shuffle Cost",
+	"name" : "Rebalance Spree Continue Cost",
 	"description" : "Swaps the costs of restarting a spree and reshuffling available heists",
 	"author" : " no",
 	"image" : "icon.png",
